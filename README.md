@@ -18,11 +18,19 @@ real-world SysAdmin & DevOps skills.
 - Static IP configuration
 - [Documentation](proxmox/plex-nas/README.md)
 
-### 🔜 Coming Soon
-- WireGuard VPN
-- Docker environment
-- Windows Server AD/GPO
-- Zabbix Monitoring
+### 🔜 Next Projects
+
+| Priority | Category | Technology | Goal |
+|---|---|---|---|
+| 1 | 🐧 Linux | Docker | Containerized services deployment |
+| 2 | 🏢 Enterprise | Windows Server (AD, DNS, DHCP) | Centralized identity & management |
+| 3 | 🏢 Enterprise | GPO | User & device policy control |
+| 4 | 🛠️ IT Support | GLPI | Ticketing & incident management |
+| 5 | 📊 Monitoring | Zabbix | Infrastructure monitoring |
+| 6 | 🔐 Network & Security | Pi-Hole | Network-wide ad & tracker blocking |
+| 7 | 🔐 Network & Security | WireGuard | Secure remote access (VPS ↔ Homelab) |
+| 8 | 🔐 Network & Security | VLAN | Network segmentation basics |
+| 9 | 🐧 Linux | RHEL / AlmaLinux | Enterprise Linux environment |
 
 ## 🛠️ Stack
 | Technology | Usage |
