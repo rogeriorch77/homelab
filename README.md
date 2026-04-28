@@ -8,7 +8,7 @@ real-world SysAdmin & DevOps skills.
 - **Server:** HPE ProLiant ML350 Gen9
 - **Hypervisor:** Proxmox VE 8.4
 - **NAS:** WD Cloud Mirror Gen2
-- **Network:** Orange Livebox (France)
+- **Network:** Orange Livebox
 
 ## 🚀 Projects
 
