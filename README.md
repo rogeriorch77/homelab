@@ -1,83 +1,211 @@
-# 🖥️ HomeLab — HPE ProLiant ML350 Gen9
+# HomeLab — Infrastructure & Virtualization
 
-Personal infrastructure laboratory built on an 
-enterprise-grade server for learning and practicing 
-real-world SysAdmin & DevOps skills.
+**Proxmox VE · Linux · Networking · Security · Storage · Self-Hosting**
 
-## 🔧 Hardware
-- **Server:** HPE ProLiant ML350 Gen9
-- **Hypervisor:** Proxmox VE 8.4
-- **NAS:** WD Cloud Mirror Gen2
-- **Network:** Orange Livebox
+A personal infrastructure laboratory built around an **HPE ProLiant ML350 Gen9**, designed to deploy, manage, troubleshoot and improve real-world IT infrastructure.
 
-## 🚀 Projects
+The environment combines virtualization, network security, Linux and Windows administration, storage, backup and self-hosted services.
 
-### ✅ Plex Media Server (LXC Container)
-- Debian 12 LXC container on Proxmox VE
-- Plex Media Server serving media from NAS via SMB
-- Static IP configuration
-- [Documentation](proxmox/plex-nas/README.md)
-
-### ✅ Proxmox VE — Hypervisor Setup
-- HPE ProLiant ML350 Gen9 running Proxmox VE 8.4
-- LXC containers (Debian 12), VM management
-- NAS integration via SMB/CIFS (persistent mount via fstab)
-- Backup strategy with VZDump to NAS storage
-- Kernel & system updates (no-subscription repository)
+This repository documents the existing infrastructure, technical implementations and future architectural improvements.
 
 ---
 
-### 🔜 Next Projects
+## 1. Infrastructure Overview
 
-## 📱 Group 1: IT Support N1/N2/N3
+| Component | Technology | Status |
+|---|---|---|
+| Physical server | HPE ProLiant ML350 Gen9 | Deployed |
+| Hypervisor | Proxmox VE 8.4 | Deployed |
+| Firewall | OPNsense virtual machine | Deployed |
+| Secure remote access | WireGuard | Deployed |
+| Network storage | WD My Cloud Mirror Gen2 | Deployed |
+| Virtualized storage | TrueNAS | Deployed — under review |
+| Hardware management | HPE iLO 4 | Available |
+| Physical firewall appliance | Dedicated x86 hardware | Planned |
+| Independent OOB management | Raspberry Pi / mini-PC | Planned |
+| Backup infrastructure | Independent backup system | Planned improvement |
 
-| Priority | Category | Technology | Goal |
-|---|---|---|---|
-| 1 | 🛠️ IT Support | GLPI | Ticketing & incident management - N1/N2 |
-| 2 | 🏢 Enterprise | Windows Server (AD - basics) | User/computer management, password resets - N1/N2 |
-| 3 | 🏢 Enterprise | GPO | User & device policy control, drive mapping - N2 |
-| 4 | 🏢 Enterprise | DNS & DHCP (troubleshooting) | Diagnose network connectivity issues - N2 |
-| 5 | 🏢 Enterprise | Microsoft 365 | Mailbox, Teams, license management - N1/N2 |
-| 6 | 🔐 Network & Security | VPN Client Support | Configure remote access for users - N2 |
-| 7 | 🛠️ IT Support | Remote Support Tools | RDP, TeamViewer troubleshooting - N1 |
-| 8 | 🛠️ IT Support | Windows 10/11 Support | OS troubleshooting, updates, drivers - N1/N2 |
-| 9 | 🛠️ IT Support | Printer Management | Network printer setup & troubleshooting - N1/N2 |
-| 10 | 🛠️ IT Support | Hardware Support | Desktop/laptop component diagnostics - N1/N2 |
+**Status definitions**
 
----
+- **Deployed:** installed and previously verified.
+- **Under review:** existing component requiring additional validation.
+- **Planned:** not yet implemented.
 
-## 🏗️ Group 2: SysAdmin Jr (Infrastructure)
+Current service availability is not implied by historical deployment status.
 
-| Priority | Category | Technology | Goal |
-|---|---|---|---|
-| 1 | 🐧 Linux | RHEL / AlmaLinux | Enterprise Linux server administration - Jr |
-| 2 | 🐧 Linux | Docker | Containerized services deployment - Jr |
-| 3 | 🏢 Enterprise | Windows Server (AD - advanced) | Domain design, FSMO roles, replication - Jr/Intermediate |
-| 4 | 🏢 Enterprise | DNS & DHCP (server setup) | Zone management, high availability - Jr |
-| 5 | 📊 Monitoring | Zabbix | Infrastructure monitoring & alerting - Jr |
-| 6 | 🔐 Network & Security | VLAN | Network segmentation (users, servers, IoT) - Jr |
-| 7 | 🔐 Network & Security | pfSense/OPNsense | Firewall, NAT, VPN, traffic filtering - Jr/Intermediate |
-| 8 | 🔐 Network & Security | WireGuard | Secure site-to-site VPN (VPS ↔ Homelab) - Jr |
-| 9 | 🔐 Network & Security | Pi-Hole | Network-wide ad & tracker blocking - Jr |
-| 10 | 🛠️ Automation | Bash / Ansible | Script automation & configuration management - Jr/Intermediate |
-| 11 | 💾 Backup & DR | Veeam / Proxmox Backup Server | VM backup & disaster recovery - Jr |
-| 12 | 🌐 Web Services | Nginx / Apache | Reverse proxy, SSL/TLS, web hosting - Jr |
-| 13 | 💾 Storage | NFS / iSCSI | Shared storage for VMs and users - Intermediate |
+## 2. Physical Hardware & Storage
 
----
+### HPE ProLiant ML350 Gen9
 
-## 🛠️ Stack
-| Technology | Usage |
+| Resource | Configuration |
 |---|---|
-| Proxmox VE 8.4 | Hypervisor |
-| Debian 12 | LXC Container OS |
-| Plex Media Server | Media streaming |
-| SMB/CIFS | NAS mount (persistent) |
-| Docker | Container management (soon) |
-| WireGuard | VPN (soon) |
+| Processor | Intel Xeon E5-2620 v4 |
+| CPU | 8 cores / 16 threads |
+| Memory | 96 GB RAM installed |
+| Hypervisor | Proxmox VE |
+| Protected storage | Approximately 300 GB mirrored |
+| Experimental storage | Approximately 900 GB non-mirrored |
+| Hardware management | HPE iLO 4 |
 
-## 📌 Goals
-- Build real-world infrastructure skills
-- Document everything as a SysAdmin would
-- Prepare for IT Support N1/N2/N3 roles in France
-- Transition to Junior SysAdmin# 🖥️ HomeLab — HPE ProLiant ML350 Gen9
+### Storage Strategy
+
+**Mirrored storage — priority workloads**
+
+Intended for Proxmox and virtual machines with persistent configurations and important operational data.
+
+**Non-mirrored storage — development and testing**
+
+Intended for experimental VMs, operating system testing, temporary environments and disposable workloads.
+
+The final allocation of virtual disks is pending verification.
+
+RAID is not a replacement for backups.
+
+## 3. Networking & Security
+
+The current infrastructure uses **OPNsense** and **WireGuard** for network security and remote access.
+
+Technical areas include:
+
+- Firewall and traffic filtering
+- Secure VPN connectivity
+- VLAN-based network segmentation
+- Network troubleshooting
+- Linux and Windows connectivity
+- Hardware-level management through iLO
+
+### Planned Improvements
+
+The current firewall is virtualized on the Proxmox host.
+
+A future dedicated x86 appliance will host OPNsense independently, reducing the infrastructure's dependency on a single physical server.
+
+An additional out-of-band (OOB) management path is planned to provide emergency access to the HPE iLO interface.
+
+Sensitive network configurations are intentionally excluded from public documentation.
+
+## 4. Virtualization & Services
+
+The laboratory includes different categories of virtual machines and Linux containers.
+
+| Category | Technologies |
+|---|---|
+| Network security | OPNsense, WireGuard |
+| Linux administration | Debian and other Linux environments |
+| Windows administration | Windows Server, Active Directory |
+| IT service management | GLPI |
+| Credential management | Vaultwarden |
+| Storage | TrueNAS, SMB/CIFS, NAS |
+| Media streaming | Jellyfin, Plex |
+| Development | Isolated application and database environments |
+
+Not every deployed service is considered production-critical. Service dependencies and recovery procedures are being reviewed.
+
+## 5. Media Services — Jellyfin & Plex
+
+Two self-hosted media solutions have been deployed as Linux containers.
+
+### Jellyfin — Preferred Platform
+
+**Status:** Deployed; migration validation pending.
+
+Jellyfin is the preferred platform for the future media environment.
+
+The implementation includes:
+
+- Linux container deployment
+- Web-based media management
+- NAS integration
+- Media library organization
+- Playback and client compatibility testing
+
+Final validation of playback, storage access, backups and automatic startup is pending.
+
+### Plex — Legacy / Fallback
+
+**Status:** Previously operational; retained during transition.
+
+Plex was initially deployed using a Debian LXC container integrated with network storage.
+
+It remains documented as an earlier implementation and a fallback while Jellyfin is being validated.
+
+[Read Plex deployment documentation](proxmox/plex-nas/README.md)
+
+**Migration objective:** complete Jellyfin validation before considering Plex retirement.
+
+## 6. Backup & Recovery
+
+The infrastructure uses network storage and Proxmox backup mechanisms.
+
+The recovery strategy is being reviewed to improve protection against:
+
+- Virtual machine failure
+- Disk failure
+- Hypervisor failure
+- Accidental deletion
+- Complete physical server loss
+
+### Planned Improvements
+
+- Independent Proxmox backup infrastructure
+- Backup integrity verification
+- Documented restoration testing
+- Encrypted off-site backup copies
+- Emergency recovery procedures
+
+The objective is to make important services recoverable without depending entirely on the HPE server.
+
+## 7. Infrastructure Roadmap
+
+| Phase | Improvement | Status |
+|---|---|---|
+| 01 | Current infrastructure audit | In progress |
+| 02 | Jellyfin migration validation | In progress |
+| 03 | Independent OOB management | Planned |
+| 04 | Dedicated physical OPNsense firewall | Planned |
+| 05 | Independent backup and recovery | Planned |
+| 06 | Critical service separation | Planned |
+| 07 | Rackmount server migration | Long-term |
+| 08 | Dedicated 42U HomeLab rack | Long-term |
+
+### Future Architecture
+
+**EDGE** — Physical firewall, network gateway and VPN.
+
+**OOB** — Independent emergency hardware management.
+
+**PVE** — Virtualization, applications and experimental workloads.
+
+**BACKUP** — Independent storage and disaster recovery.
+
+The future design may include multiple racks for production, networking and backup infrastructure.
+
+These are architectural objectives, not completed deployments.
+
+## 8. Repository Documentation
+
+- [Plex LXC + NAS Integration](proxmox/plex-nas/README.md)
+- Jellyfin deployment — documentation planned
+- Hardware and storage — documentation planned
+- Network architecture — documentation planned
+- Backup and disaster recovery — documentation planned
+- Infrastructure roadmap — documentation planned
+
+Documentation is added as implementations are validated.
+
+## 9. Security & Documentation Policy
+
+This public repository focuses on infrastructure engineering, implementation and technical learning.
+
+The following information is intentionally excluded:
+
+- Credentials, tokens and private keys
+- Internal IP addressing and sensitive topology details
+- Production firewall rules and VPN configuration
+- Private application source code
+- Sensitive recovery procedures
+- Private business and product documentation
+
+---
+
+**Build · Deploy · Test · Troubleshoot · Document · Improve**
